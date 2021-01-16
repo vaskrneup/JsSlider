@@ -36,12 +36,12 @@ class Carousel {
         const timePerFrame = (this.transactionTime / ((n * 100) - this.slideLeft)) * direction;
         this.currentImageIndex = n;
 
-        this.sliderStateDots[this.lastImageIndex].classList.remove("active")
+        this.sliderStateDots[this.lastImageIndex].classList.remove('active');
 
         const animate = setInterval(() => {
             this.slideLeft += direction;
             this.slide.style.left = (-this.slideLeft) + '%';
-            this.sliderStateDots[n].classList.add("active")
+            this.sliderStateDots[n].classList.add('active');
 
             if (direction === 1 ? this.slideLeft >= targetWidth : this.slideLeft <= targetWidth) {
                 this.slide.style.left = (-targetWidth) + '%';
@@ -64,39 +64,39 @@ class Carousel {
     }
 
     addListeners = () => {
-        this.sliderNextBtn.addEventListener("click", this.showNextImage)
-        this.sliderPreviousBtn.addEventListener("click", this.showPreviousImage)
+        this.sliderNextBtn.addEventListener('click', this.showNextImage);
+        this.sliderPreviousBtn.addEventListener('click', this.showPreviousImage);
 
-        this.slider.addEventListener("mouseenter", () => {
+        this.slider.addEventListener('mouseenter', () => {
             clearInterval(this.imageHoldHandler);
-        })
-        this.slider.addEventListener("mouseleave", () => {
+        });
+        this.slider.addEventListener('mouseleave', () => {
             this.imageHoldHandler = setInterval(() => {
                 this.showNextImage()
             }, this.holdTime);
-        })
+        });
     };
 
     createSliderDots = () => {
         for (let i = 0; i < this.imageCount; i++) {
             const currentImageIndicator = document.createElement('span');
-            currentImageIndicator.classList.add("current-image-dot")
+            currentImageIndicator.classList.add('current-image-dot');
 
-            currentImageIndicator.addEventListener("click", () => this.animateToNthImage(i))
+            currentImageIndicator.addEventListener('click', () => this.animateToNthImage(i));
             this.sliderStateDots.push(currentImageIndicator);
         }
 
-        this.sliderStateDots[0].classList.add("active")
+        this.sliderStateDots[0].classList.add('active');
     }
 
     renderSliderDots = () => {
-        const currentImageDotContainer = document.createElement("div");
-        currentImageDotContainer.classList.add("current-image-dot-container");
+        const currentImageDotContainer = document.createElement('div');
+        currentImageDotContainer.classList.add('current-image-dot-container');
 
         this.slider.appendChild(currentImageDotContainer);
         this.sliderStateDots.forEach(value => {
             currentImageDotContainer.appendChild(value);
-        })
+        });
     }
 
     addStyles() {
@@ -124,18 +124,18 @@ class Carousel {
     };
 
     render = () => {
-        this.createSliderDots()
+        this.createSliderDots();
         this.addStyles();
         this.addListeners();
         this.renderSliderButtons();
         this.renderSliderDots();
 
         this.imageHoldHandler = setInterval(() => {
-            this.showNextImage()
+            this.showNextImage();
         }, this.holdTime);
     };
 }
 
-const carousel = new Carousel('first-slider', 500);
+const carousel = new Carousel('first-slider', 500, 1000);
 carousel.render();
 // carousel.animateToNthImage(1)
