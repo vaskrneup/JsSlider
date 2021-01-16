@@ -56,7 +56,6 @@ class Carousel {
      *  @param n {Number}       slides to this index.
      * */
     animateToNthImage = (n) => {
-        console.log(n, this.currentImageIndex)
         // disable slider buttons until the animation is complete !!
         this.sliderNextBtn.disabled = true;
         this.sliderPreviousBtn.disabled = true;
@@ -220,8 +219,8 @@ class Carousel {
 }
 
 const carousel = new Carousel('first-slider', 500, 1000);
-// const carousel1 = new Carousel('second-slider', 1000, 1500);
+const carousel1 = new Carousel('second-slider', 1000, 1500);
 // const carousel2 = new Carousel('third-slider', 700, 2000);
 carousel.render();
-// carousel1.render();
+carousel1.render();
 // carousel2.render();
