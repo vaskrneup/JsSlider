@@ -38,6 +38,7 @@ class Carousel {
             this.slide.style.left = (-this.slideLeft) + '%';
 
             if (direction === 1 ? this.slideLeft >= targetWidth : this.slideLeft <= targetWidth) {
+                this.slide.style.left = (-targetWidth) + '%';
                 clearInterval(animate)
             }
         }, timePerFrame);
