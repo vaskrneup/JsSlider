@@ -30,6 +30,27 @@ class Carousel {
         this.sliderStateDots = [];
     }
 
+    // OLD ALGO !!
+    // animateToNthImage = (n) => {
+    //     const targetWidth = n * 100;
+    //     const direction = this.currentImageIndex > n ? -1 : 1;
+    //     const timePerFrame = (this.transactionTime / ((n * 100) - this.slideLeft)) * direction;
+    //     this.currentImageIndex = n;
+    //
+    //     this.sliderStateDots[this.lastImageIndex].classList.remove('active');
+    //
+    //     // const animate = setInterval(() => {
+    //     //     this.slideLeft += direction;
+    //     //     this.slide.style.left = (-this.slideLeft) + '%';
+    //     //     this.sliderStateDots[n].classList.add('active');
+    //     //
+    //     //     if (direction === 1 ? this.slideLeft >= targetWidth : this.slideLeft <= targetWidth) {
+    //     //         this.slide.style.left = (-targetWidth) + '%';
+    //     //         clearInterval(animate);
+    //     //         this.lastImageIndex = n;
+    //     //     }
+    //     // }, timePerFrame);
+    // }
     /**
      *  Slides to nth position with animation.
      *  @param n {Number}       slides to this index.
@@ -37,24 +58,26 @@ class Carousel {
     animateToNthImage = (n) => {
         const targetWidth = n * 100;
         const direction = this.currentImageIndex > n ? -1 : 1;
-        const timePerFrame = (this.transactionTime / ((n * 100) - this.slideLeft)) * direction;
+        const perFrameWidth = ((targetWidth - this.slideLeft) / (60 * (this.transactionTime / 1000)));
         this.currentImageIndex = n;
 
         this.sliderStateDots[this.lastImageIndex].classList.remove('active');
 
-        const animate = setInterval(() => {
-            this.slideLeft += direction;
+        const animate = () => {
+            this.slideLeft += perFrameWidth;
             this.slide.style.left = (-this.slideLeft) + '%';
             this.sliderStateDots[n].classList.add('active');
 
             if (direction === 1 ? this.slideLeft >= targetWidth : this.slideLeft <= targetWidth) {
                 this.slide.style.left = (-targetWidth) + '%';
-                clearInterval(animate);
                 this.lastImageIndex = n;
+            } else {
+                requestAnimationFrame(animate);
             }
-        }, timePerFrame);
-    }
+        };
 
+        animate();
+    }
     /**
      *  Slides to next image if available else, to first image.
      * */
@@ -102,7 +125,7 @@ class Carousel {
             this.sliderStateDots.push(currentImageIndicator);
         }
 
-        this.sliderStateDots[0].classList.add('active');
+        this.sliderStateDots.length && this.sliderStateDots[0].classList.add('active');
     }
 
     /**
@@ -170,9 +193,8 @@ class Carousel {
 }
 
 const carousel = new Carousel('first-slider', 500, 1000);
-const carousel1 = new Carousel('second-slider', 400, 1500);
-const carousel2 = new Carousel('third-slider', 700, 2000);
+// const carousel1 = new Carousel('second-slider', 1000, 1500);
+// const carousel2 = new Carousel('third-slider', 700, 2000);
 carousel.render();
-carousel1.render();
-carousel2.render();
-// carousel.animateToNthImage(1)
+// carousel1.render();
+// carousel2.render();
