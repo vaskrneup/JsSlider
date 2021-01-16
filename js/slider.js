@@ -56,6 +56,7 @@ class Carousel {
      *  @param n {Number}       slides to this index.
      * */
     animateToNthImage = (n) => {
+        console.log(n, this.currentImageIndex)
         // disable slider buttons until the animation is complete !!
         this.sliderNextBtn.disabled = true;
         this.sliderPreviousBtn.disabled = true;
@@ -75,7 +76,7 @@ class Carousel {
             if (direction === 1 ? this.slideLeft >= targetWidth : this.slideLeft <= targetWidth) {
                 this.slide.style.left = (-targetWidth) + '%';
                 this.lastImageIndex = n;
-                
+
                 this.sliderNextBtn.disabled = false;
                 this.sliderPreviousBtn.disabled = false;
             } else {
@@ -100,7 +101,7 @@ class Carousel {
     showPreviousImage = () => {
         const preImgIndex = this.currentImageIndex - 1;
         if (preImgIndex < 0) this.animateToNthImage(this.imageCount - 1);
-        else this.animateToNthImage(preImgIndex - 1);
+        else this.animateToNthImage(preImgIndex);
     }
 
     /**
