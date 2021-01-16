@@ -1,6 +1,6 @@
 # BASIC JS SLIDER
 
-### To Use Please follow the following conventions
+### To Use Please follow the following Instructions
 
 * Provide `id` for identifying the carousel with class `slider`. Then add class of `slide` to inner wrapper, then
   add `img` tags within `slide` div.
