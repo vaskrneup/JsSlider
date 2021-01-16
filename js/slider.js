@@ -2,15 +2,17 @@ class Carousel {
     /**
      * @param {String} sliderSelector       Id of slider.
      * @param  {Number} transactionTime     Time for animation before reaching another page, if not given 1000 will be used.
-     * @param  {Number} holdTime            Time to hold on active image, if not given 1000 will be used.
+     * @param  {Number} holdTime            Time to hold on active image, if not given 5000 will be used.
      */
     constructor(
         sliderSelector,
         transactionTime = 1000,
-        holdTime = 1000,
+        holdTime = 5000,
     ) {
         this.transactionTime = transactionTime;
         this.holdTime = holdTime;
+
+        this.imageHoldHandler = null;
 
         this.slider = document.getElementById(sliderSelector);
         this.slide = this.slider.querySelector('.slide');
@@ -25,7 +27,7 @@ class Carousel {
         this.slideLeft = this.currentImageIndex * 100;
     }
 
-    animateToNthPicture = (n) => {
+    animateToNthImage = (n) => {
         const targetWidth = n * 100;
         const direction = this.currentImageIndex > n ? -1 : 1;
         const timePerFrame = (this.transactionTime / ((n * 100) - this.slideLeft)) * direction;
@@ -41,21 +43,30 @@ class Carousel {
         }, timePerFrame);
     }
 
-    showNextPicture = () => {
+    showNextImage = () => {
         const nextImgIndex = this.currentImageIndex + 1;
-        if (nextImgIndex > this.imageCount - 1) this.animateToNthPicture(0);
-        else this.animateToNthPicture(nextImgIndex);
+        if (nextImgIndex > this.imageCount - 1) this.animateToNthImage(0);
+        else this.animateToNthImage(nextImgIndex);
     }
 
-    showPreviousPicture = () => {
+    showPreviousImage = () => {
         const preImgIndex = this.currentImageIndex - 1;
-        if (preImgIndex < 0) this.animateToNthPicture(this.imageCount - 1);
-        else this.animateToNthPicture(preImgIndex - 1);
+        if (preImgIndex < 0) this.animateToNthImage(this.imageCount - 1);
+        else this.animateToNthImage(preImgIndex - 1);
     }
 
     addListeners() {
-        this.sliderNextBtn.addEventListener("click", this.showNextPicture)
-        this.sliderPreviousBtn.addEventListener("click", this.showPreviousPicture)
+        this.sliderNextBtn.addEventListener("click", this.showNextImage)
+        this.sliderPreviousBtn.addEventListener("click", this.showPreviousImage)
+
+        this.slider.addEventListener("mouseenter", () => {
+            clearInterval(this.imageHoldHandler);
+        })
+        this.slider.addEventListener("mouseleave", () => {
+            this.imageHoldHandler = setInterval(() => {
+                this.showNextImage()
+            }, this.holdTime);
+        })
     }
 
     addStyles() {
@@ -85,9 +96,13 @@ class Carousel {
         this.addStyles();
         this.addListeners();
         this.renderSliderButtons();
+
+        this.imageHoldHandler = setInterval(() => {
+            this.showNextImage()
+        }, this.holdTime);
     }
 }
 
-const carousel = new Carousel('first-slider');
+const carousel = new Carousel('first-slider', 1000);
 carousel.render();
-// carousel.animateToNthPicture(1)
+// carousel.animateToNthImage(1)
