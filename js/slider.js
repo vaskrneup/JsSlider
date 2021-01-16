@@ -21,10 +21,13 @@ class Carousel {
         this.sliderPreviousBtn = document.createElement('button');
 
         this.currentImageIndex = 0;
+        this.lastImageIndex = 0;
         this.images = this.slide.querySelectorAll('img');
         this.imageCount = this.images.length;
         this.imageWidth = (100 / this.imageCount).toFixed(6);
         this.slideLeft = this.currentImageIndex * 100;
+
+        this.sliderStateDots = [];
     }
 
     animateToNthImage = (n) => {
@@ -33,13 +36,17 @@ class Carousel {
         const timePerFrame = (this.transactionTime / ((n * 100) - this.slideLeft)) * direction;
         this.currentImageIndex = n;
 
+        this.sliderStateDots[this.lastImageIndex].classList.remove("active")
+
         const animate = setInterval(() => {
             this.slideLeft += direction;
             this.slide.style.left = (-this.slideLeft) + '%';
+            this.sliderStateDots[n].classList.add("active")
 
             if (direction === 1 ? this.slideLeft >= targetWidth : this.slideLeft <= targetWidth) {
                 this.slide.style.left = (-targetWidth) + '%';
-                clearInterval(animate)
+                clearInterval(animate);
+                this.lastImageIndex = n;
             }
         }, timePerFrame);
     }
@@ -70,6 +77,26 @@ class Carousel {
         })
     }
 
+    createSliderDots = () => {
+        for (let i = 0; i < this.imageCount; i++) {
+            const currentImageIndicator = document.createElement('span');
+            currentImageIndicator.classList.add("current-image-dot")
+            this.sliderStateDots.push(currentImageIndicator);
+        }
+
+        this.sliderStateDots[0].classList.add("active")
+    }
+
+    renderSliderDots = () => {
+        const currentImageDotContainer = document.createElement("div");
+        currentImageDotContainer.classList.add("current-image-dot-container");
+
+        this.slider.appendChild(currentImageDotContainer);
+        this.sliderStateDots.forEach(value => {
+            currentImageDotContainer.appendChild(value);
+        })
+    }
+
     addStyles() {
         this.addSliderStyles();
         this.addButtonStyles();
@@ -79,6 +106,7 @@ class Carousel {
         this.slide.style.width = (this.imageCount * 100) + '%';
         this.images.forEach(img => (img.style.width = this.imageWidth + '%'));
     }
+
 
     addButtonStyles() {
         this.sliderNextBtn.classList.add('slider-btn', 'slider-next-btn');
@@ -94,6 +122,8 @@ class Carousel {
     }
 
     render() {
+        this.createSliderDots()
+        this.renderSliderDots();
         this.addStyles();
         this.addListeners();
         this.renderSliderButtons();
