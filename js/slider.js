@@ -63,7 +63,7 @@ class Carousel {
         else this.animateToNthImage(preImgIndex - 1);
     }
 
-    addListeners() {
+    addListeners = () => {
         this.sliderNextBtn.addEventListener("click", this.showNextImage)
         this.sliderPreviousBtn.addEventListener("click", this.showPreviousImage)
 
@@ -75,7 +75,7 @@ class Carousel {
                 this.showNextImage()
             }, this.holdTime);
         })
-    }
+    };
 
     createSliderDots = () => {
         for (let i = 0; i < this.imageCount; i++) {
@@ -115,27 +115,27 @@ class Carousel {
         this.sliderPreviousBtn.classList.add('slider-btn', 'slider-prev-btn');
     }
 
-    renderSliderButtons() {
+    renderSliderButtons = () => {
         this.sliderNextBtn.innerHTML = '&#10095;';
         this.sliderPreviousBtn.innerHTML = '&#10094;';
 
         this.slider.appendChild(this.sliderNextBtn);
         this.slider.appendChild(this.sliderPreviousBtn);
-    }
+    };
 
-    render() {
+    render = () => {
         this.createSliderDots()
-        this.renderSliderDots();
         this.addStyles();
         this.addListeners();
         this.renderSliderButtons();
+        this.renderSliderDots();
 
         this.imageHoldHandler = setInterval(() => {
             this.showNextImage()
         }, this.holdTime);
-    }
+    };
 }
 
-const carousel = new Carousel('first-slider', 1000);
+const carousel = new Carousel('first-slider', 500);
 carousel.render();
 // carousel.animateToNthImage(1)
