@@ -103,13 +103,15 @@ class Carousel {
         this.sliderNextBtn.addEventListener('click', this.showNextImage);
         this.sliderPreviousBtn.addEventListener('click', this.showPreviousImage);
 
-        this.slider.addEventListener('mouseenter', () => {
-            clearInterval(this.imageHoldHandler);
-        });
-        this.slider.addEventListener('mouseleave', () => {
-            this.imageHoldHandler = setInterval(() => {
-                this.showNextImage()
-            }, this.holdTime);
+        this.slider.addEventListener('mouseenter', this.stopSliderInterval);
+        this.slider.addEventListener('mouseleave', this.startSliderInterval);
+
+        document.addEventListener("visibilitychange", () => {
+            if (this.imageHoldHandler) {
+                this.stopSliderInterval();
+            } else {
+                this.startSliderInterval();
+            }
         });
     };
 
@@ -175,6 +177,17 @@ class Carousel {
         this.slider.appendChild(this.sliderNextBtn);
         this.slider.appendChild(this.sliderPreviousBtn);
     };
+
+    startSliderInterval = () => {
+        this.imageHoldHandler = setInterval(() => {
+            this.showNextImage()
+        }, this.holdTime);
+    }
+
+    stopSliderInterval = () => {
+        clearInterval(this.imageHoldHandler);
+        this.imageHoldHandler = null;
+    }
 
     /**
      *  Renders all the widgets.
