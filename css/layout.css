@@ -1,0 +1,12 @@
+.slider-container {
+    max-width: 1000px;
+
+}
+
+.slider-wrapper {
+    width: 3000px;
+}
+
+.slider-wrapper img {
+    float: left;
+}
