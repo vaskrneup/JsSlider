@@ -1,12 +1,12 @@
-.slider-container {
-    max-width: 1000px;
-
+.slider {
+    width: 100%;
+    overflow: hidden;
 }
 
-.slider-wrapper {
-    width: 3000px;
+.slide {
+    position: relative;
 }
 
-.slider-wrapper img {
+.slider img {
     float: left;
 }
