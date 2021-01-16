@@ -81,6 +81,8 @@ class Carousel {
         for (let i = 0; i < this.imageCount; i++) {
             const currentImageIndicator = document.createElement('span');
             currentImageIndicator.classList.add("current-image-dot")
+
+            currentImageIndicator.addEventListener("click", () => this.animateToNthImage(i))
             this.sliderStateDots.push(currentImageIndicator);
         }
 
