@@ -30,6 +30,10 @@ class Carousel {
         this.sliderStateDots = [];
     }
 
+    /**
+     *  Slides to nth position with animation.
+     *  @param n {Number}       slides to this index.
+     * */
     animateToNthImage = (n) => {
         const targetWidth = n * 100;
         const direction = this.currentImageIndex > n ? -1 : 1;
@@ -51,18 +55,27 @@ class Carousel {
         }, timePerFrame);
     }
 
+    /**
+     *  Slides to next image if available else, to first image.
+     * */
     showNextImage = () => {
         const nextImgIndex = this.currentImageIndex + 1;
         if (nextImgIndex > this.imageCount - 1) this.animateToNthImage(0);
         else this.animateToNthImage(nextImgIndex);
     }
 
+    /**
+     *  Slides to previous image if available else, to last image.
+     * */
     showPreviousImage = () => {
         const preImgIndex = this.currentImageIndex - 1;
         if (preImgIndex < 0) this.animateToNthImage(this.imageCount - 1);
         else this.animateToNthImage(preImgIndex - 1);
     }
 
+    /**
+     *  Place to add listeners, which are supposed to change or overridden.
+     * */
     addListeners = () => {
         this.sliderNextBtn.addEventListener('click', this.showNextImage);
         this.sliderPreviousBtn.addEventListener('click', this.showPreviousImage);
@@ -77,6 +90,9 @@ class Carousel {
         });
     };
 
+    /**
+     *  Creates slider dots.
+     * */
     createSliderDots = () => {
         for (let i = 0; i < this.imageCount; i++) {
             const currentImageIndicator = document.createElement('span');
@@ -89,6 +105,9 @@ class Carousel {
         this.sliderStateDots[0].classList.add('active');
     }
 
+    /**
+     *  Renders slider dots to the DOM.
+     * */
     renderSliderDots = () => {
         const currentImageDotContainer = document.createElement('div');
         currentImageDotContainer.classList.add('current-image-dot-container');
@@ -99,22 +118,33 @@ class Carousel {
         });
     }
 
+    /**
+     *  Runs sub methods for adding styles, can be overridden for changing styles
+     * */
     addStyles() {
         this.addSliderStyles();
         this.addButtonStyles();
     }
 
+    /**
+     *  Creates slider dots, override to change slider styles.
+     * */
     addSliderStyles() {
         this.slide.style.width = (this.imageCount * 100) + '%';
         this.images.forEach(img => (img.style.width = this.imageWidth + '%'));
     }
 
-
+    /**
+     *  Creates button dots, override to change button styles.
+     * */
     addButtonStyles() {
         this.sliderNextBtn.classList.add('slider-btn', 'slider-next-btn');
         this.sliderPreviousBtn.classList.add('slider-btn', 'slider-prev-btn');
     }
 
+    /**
+     *  Renders slider Buttons.
+     * */
     renderSliderButtons = () => {
         this.sliderNextBtn.innerHTML = '&#10095;';
         this.sliderPreviousBtn.innerHTML = '&#10094;';
@@ -123,6 +153,9 @@ class Carousel {
         this.slider.appendChild(this.sliderPreviousBtn);
     };
 
+    /**
+     *  Renders all the widgets.
+     * */
     render = () => {
         this.createSliderDots();
         this.addStyles();
