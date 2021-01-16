@@ -170,5 +170,9 @@ class Carousel {
 }
 
 const carousel = new Carousel('first-slider', 500, 1000);
+const carousel1 = new Carousel('second-slider', 400, 1500);
+const carousel2 = new Carousel('third-slider', 700, 2000);
 carousel.render();
+carousel1.render();
+carousel2.render();
 // carousel.animateToNthImage(1)
