@@ -56,6 +56,10 @@ class Carousel {
      *  @param n {Number}       slides to this index.
      * */
     animateToNthImage = (n) => {
+        // disable slider buttons until the animation is complete !!
+        this.sliderNextBtn.disabled = true;
+        this.sliderPreviousBtn.disabled = true;
+
         const targetWidth = n * 100;
         const direction = this.currentImageIndex > n ? -1 : 1;
         const perFrameWidth = ((targetWidth - this.slideLeft) / (60 * (this.transactionTime / 1000)));
@@ -71,6 +75,9 @@ class Carousel {
             if (direction === 1 ? this.slideLeft >= targetWidth : this.slideLeft <= targetWidth) {
                 this.slide.style.left = (-targetWidth) + '%';
                 this.lastImageIndex = n;
+                
+                this.sliderNextBtn.disabled = false;
+                this.sliderPreviousBtn.disabled = false;
             } else {
                 requestAnimationFrame(animate);
             }
@@ -144,7 +151,7 @@ class Carousel {
     }
 
     /**
-     *  Runs sub methods for adding styles, can be overridden for changing styles
+     *  Runs sub methods for adding styles, can be overridden for changing styles.
      * */
     addStyles() {
         this.addSliderStyles();
@@ -160,7 +167,7 @@ class Carousel {
     }
 
     /**
-     *  Creates button dots, override to change button styles.
+     *  Creates button, override to change button styles.
      * */
     addButtonStyles() {
         this.sliderNextBtn.classList.add('slider-btn', 'slider-next-btn');
@@ -178,12 +185,18 @@ class Carousel {
         this.slider.appendChild(this.sliderPreviousBtn);
     };
 
+    /**
+     *  Starts auto play in slider.
+     * */
     startSliderInterval = () => {
         this.imageHoldHandler = setInterval(() => {
             this.showNextImage()
         }, this.holdTime);
     }
 
+    /**
+     *  Stops auto play in slider.
+     * */
     stopSliderInterval = () => {
         clearInterval(this.imageHoldHandler);
         this.imageHoldHandler = null;
