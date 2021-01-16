@@ -1,4 +1,6 @@
 .slider {
+    position: relative;
+
     width: 100%;
     overflow: hidden;
 }
@@ -9,4 +11,19 @@
 
 .slider img {
     float: left;
+}
+
+.slider-btn {
+    position: absolute;
+    top: 40%;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.slider-next-btn {
+    left: 1%;
+}
+
+.slider-prev-btn {
+    right: 1%;
 }
