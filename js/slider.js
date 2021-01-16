@@ -3,17 +3,20 @@ class Carousel {
      * @param {String} sliderSelector       Id of slider.
      * @param  {Number} transactionTime     Time for animation before reaching another page, if not given 1000 will be used.
      * @param  {Number} holdTime            Time to hold on active image, if not given 5000 will be used.
+     * @param {boolean} autoplay            Signifies if slider must start playing by itself, default is set to true.
      */
     constructor(
         sliderSelector,
         transactionTime = 1000,
         holdTime = 5000,
+        autoplay = true,
     ) {
         this.transactionTime = transactionTime;
         this.holdTime = holdTime;
 
         this.imageHoldHandler = null;
 
+        this.autoplay = autoplay;
         this.slider = document.getElementById(sliderSelector);
         this.slide = this.slider.querySelector('.slide');
 
@@ -189,17 +192,21 @@ class Carousel {
      *  Starts auto play in slider.
      * */
     startSliderInterval = () => {
-        this.imageHoldHandler = setInterval(() => {
-            this.showNextImage()
-        }, this.holdTime);
+        if (this.autoplay) {
+            this.imageHoldHandler = setInterval(() => {
+                this.showNextImage()
+            }, this.holdTime);
+        }
     }
 
     /**
      *  Stops auto play in slider.
      * */
     stopSliderInterval = () => {
-        clearInterval(this.imageHoldHandler);
-        this.imageHoldHandler = null;
+        if (this.autoplay) {
+            clearInterval(this.imageHoldHandler);
+            this.imageHoldHandler = null;
+        }
     }
 
     /**
@@ -212,9 +219,7 @@ class Carousel {
         this.renderSliderButtons();
         this.renderSliderDots();
 
-        this.imageHoldHandler = setInterval(() => {
-            this.showNextImage();
-        }, this.holdTime);
+        this.startSliderInterval();
     };
 }
 
