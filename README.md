@@ -16,10 +16,11 @@
 
 * You can now use
   ```
-  const carousel = new Carousel('first-slider', 500, 1000);
+  const carousel = new Carousel('first-slider', 500, 1000, true);
   ```
   to create a carousel object, where `First Paramerter: id of div`
-  , `Second Paramerter: time taken to slide to next slide`, `Third Paramerter: Wait time before displaying next image`
+  , `Second Paramerter: time taken to slide to next slide`, `Third Paramerter: Wait time before displaying next image`,
+  `last paramerter is for autoplay, default is true`. Then use
   ```
   carousel.render();
   ```
