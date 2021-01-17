@@ -69,11 +69,11 @@ class Carousel {
         this.currentImageIndex = n;
 
         this.sliderStateDots[this.lastImageIndex].classList.remove('active');
+        this.sliderStateDots[n].classList.add('active');
 
         const animate = () => {
             this.slideLeft += perFrameWidth;
             this.slide.style.left = (-this.slideLeft) + '%';
-            this.sliderStateDots[n].classList.add('active');
 
             if (direction === 1 ? this.slideLeft >= targetWidth : this.slideLeft <= targetWidth) {
                 this.slideLeft = targetWidth;
