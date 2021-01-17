@@ -76,6 +76,7 @@ class Carousel {
             this.sliderStateDots[n].classList.add('active');
 
             if (direction === 1 ? this.slideLeft >= targetWidth : this.slideLeft <= targetWidth) {
+                this.slideLeft = targetWidth;
                 this.slide.style.left = (-targetWidth) + '%';
                 this.lastImageIndex = n;
 
@@ -116,7 +117,7 @@ class Carousel {
         this.slider.addEventListener('mouseenter', this.stopSliderInterval);
         this.slider.addEventListener('mouseleave', this.startSliderInterval);
 
-        document.addEventListener("visibilitychange", () => {
+        document.addEventListener('visibilitychange', () => {
             if (this.imageHoldHandler) {
                 this.stopSliderInterval();
             } else {
