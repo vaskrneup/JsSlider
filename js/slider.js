@@ -223,7 +223,7 @@ class Carousel {
     };
 }
 
-const carousel = new Carousel('first-slider', 500, 1000);
+const carousel = new Carousel('first-slider', 500, 1000, false);
 const carousel1 = new Carousel('second-slider', 1000, 1500);
 // const carousel2 = new Carousel('third-slider', 700, 2000);
 carousel.render();
