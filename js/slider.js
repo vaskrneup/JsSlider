@@ -1,3 +1,6 @@
+const FPS = 60;
+
+
 class Carousel {
     /**
      * @param {String} sliderSelector       Id of slider.
@@ -65,7 +68,7 @@ class Carousel {
 
         const targetWidth = n * 100;
         const direction = this.currentImageIndex > n ? -1 : 1;
-        const perFrameWidth = ((targetWidth - this.slideLeft) / (60 * (this.transactionTime / 1000)));
+        const perFrameWidth = ((targetWidth - this.slideLeft) / (FPS * (this.transactionTime / 1000)));
         this.currentImageIndex = n;
 
         this.sliderStateDots[this.lastImageIndex].classList.remove('active');
